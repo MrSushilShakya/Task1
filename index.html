@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+    <!-- React JS scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel script for JSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        table {
+            border: 2px solid rgb(146, 143, 143);
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid rgb(204, 204, 204);
+            padding: 0px; /* Remove padding */
+            text-align: center;
+            background-color: rgb(204, 204, 204);
+        }
+        th {
+            background-color: rgb(204, 204, 204);
+            height: 32px;
+        }
+        input {
+            border: none;
+            width: 100%; /* Adjust the width of the input to fill the cell */
+            box-sizing: border-box; /* Include padding and border in the width calculation */
+            text-align: center; 
+            height: 30px;
+        /* Align text center */
+        }
+        .filled {
+            background-color: rgb(231, 227, 227);
+        }
+        /* Increase the width of the first column */
+        td:first-child {
+            width: 30%;/* Adjust the width as needed */
+        }
+        td:nth-child(2){
+            width: 15%;
+        }
+        td:nth-child(3){
+            width: 10%;
+        }
+        td:nth-child(4){
+            width: 20%;
+        }
+        td:nth-child(2){
+            width: 15%;
+        }
+        td:nth-child(6){
+            width: 15%;
+        }
+    </style
+    
+    
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+    // Sample data for the table
+    const data = [
+        ["Onboarding Call", "", "", "", "", "", ""],
+        ["Google Search Console Access", "", "", "", "", "", ""],
+        ["Google Analytics Access", "", "", "", "", "", ""],
+        ["Website Access", "", "", "", "", "", ""],
+        ["Technical Audit", "", "", "", "", "", ""],
+        ["Anchor Text and Semantic Analysis", "", "", "", "", "", ""],
+        ["Competitor Analysis", "", "", "", "", "", ""],
+        ["Anchor Text/URL Mapping", "", "", "", "", "", ""],
+        ["Google Data Studio Report + Local Reporting Suite", "", "", "", "", "", ""],
+        ["Site Level Optimization", "", "", "", "", "", ""],
+        ["On Page Optimization", "", "", "", "", "", ""],
+        ["Content Creation", "", "", "", "", "", ""],
+        ["Content Publishing", "", "", "", "", "", ""],
+        ["Premium Press Release", "", "", "", "", "", ""],
+        ["Authority Niche Placements", "", "", "", "", "", ""],
+        ["Review Management", "", "", "", "", "", ""],
+        ["Index Links", "", "", "", "", "", ""],
+        ["Video Recap", "", "", "", "", "", ""]
+    ];
+
+    class EditableTable extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { data: data };
+        }
+
+        handleChange = (e, rowIndex, colIndex) => {
+            const newData = this.state.data.map((row, rIndex) => {
+                if (rIndex === rowIndex) {
+                    return row.map((cell, cIndex) => {
+                        if (cIndex === colIndex) {
+                            return e.target.value;
+                        }
+                        return cell;
+                    });
+                }
+                return row;
+            });
+            this.setState({ data: newData });
+        }
+
+        render() {
+            return (
+                <table>
+                    <thead>
+                        <tr>
+                            <th colSpan="7">MONTH 1</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.data.map((rowData, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {rowData.map((cellData, colIndex) => (
+                                    <td key={colIndex}>
+                                        <input
+                                            type="text"
+                                            value={cellData}
+                                            className={cellData ? "filled" : ""}
+                                            onChange={e => this.handleChange(e, rowIndex, colIndex)}
+                                        />
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            );
+        }
+    }
+
+    // Render the component to the HTML div with id 'root'
+    ReactDOM.render(<EditableTable />, document.getElementById('root'));
+</script>
+
+</body>
+</html>
